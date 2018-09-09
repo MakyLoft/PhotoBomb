@@ -54,3 +54,10 @@ buck-out/
 
 # Bundle artifact
 *.jsbundle
+
+#MakyTool
+MakyTool.pdb
+MakyTool.exe.config
+MakyTool/Source/.vs
+MakyTool/Source/bin
+MakyTool/Source/obj
