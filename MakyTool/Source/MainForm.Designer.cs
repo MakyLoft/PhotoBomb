@@ -32,6 +32,7 @@
             this.button_runAndroid = new System.Windows.Forms.Button();
             this.button_launchEmulator = new System.Windows.Forms.Button();
             this.button_launchServer = new System.Windows.Forms.Button();
+            this.button_openVSProject = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_runAndroid
@@ -67,11 +68,23 @@
             this.button_launchServer.UseVisualStyleBackColor = true;
             this.button_launchServer.Click += new System.EventHandler(this.button_launchServer_Click);
             // 
+            // button_openVSProject
+            // 
+            this.button_openVSProject.Location = new System.Drawing.Point(141, 51);
+            this.button_openVSProject.Name = "button_openVSProject";
+            this.button_openVSProject.Size = new System.Drawing.Size(105, 23);
+            this.button_openVSProject.TabIndex = 3;
+            this.button_openVSProject.TabStop = false;
+            this.button_openVSProject.Text = "Open VS Project";
+            this.button_openVSProject.UseVisualStyleBackColor = true;
+            this.button_openVSProject.Click += new System.EventHandler(this.button_openVSProject_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(258, 128);
+            this.Controls.Add(this.button_openVSProject);
             this.Controls.Add(this.button_launchServer);
             this.Controls.Add(this.button_launchEmulator);
             this.Controls.Add(this.button_runAndroid);
@@ -81,6 +94,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "MakyTool";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
 
         }
@@ -90,6 +104,7 @@
         private System.Windows.Forms.Button button_runAndroid;
         private System.Windows.Forms.Button button_launchEmulator;
         private System.Windows.Forms.Button button_launchServer;
+        private System.Windows.Forms.Button button_openVSProject;
     }
 }
 

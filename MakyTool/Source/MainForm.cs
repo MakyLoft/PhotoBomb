@@ -15,7 +15,7 @@ namespace MakyTool
 {
     public partial class MainForm : Form
     {
-        enum PROCESSES { RUN_ANDROID, LAUNCH_EMULATOR, LAUNCH_SERVER }
+        enum PROCESSES { RUN_ANDROID, LAUNCH_EMULATOR, LAUNCH_SERVER, OPEN_VS_PROJECT }
         private static PROCESSES nextProcess;
 
         private static String basePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MakyTool\\Scripts\\";
@@ -27,6 +27,11 @@ namespace MakyTool
         {
             InitializeComponent();
             CheckForSetup();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void CheckForSetup()
@@ -64,6 +69,10 @@ namespace MakyTool
 
                 case PROCESSES.LAUNCH_SERVER:
                     processBat = "launchServer.bat";
+                    break;
+
+                case PROCESSES.OPEN_VS_PROJECT:
+                    processBat = "openVSProject.bat";
                     break;
             }
 
@@ -105,6 +114,12 @@ namespace MakyTool
         private void button_launchServer_Click(object sender, EventArgs e)
         {
             SetNextProcess(PROCESSES.LAUNCH_SERVER);
+            RunProcessThread();
+        }
+
+        private void button_openVSProject_Click(object sender, EventArgs e)
+        {
+            SetNextProcess(PROCESSES.OPEN_VS_PROJECT);
             RunProcessThread();
         }
     }
