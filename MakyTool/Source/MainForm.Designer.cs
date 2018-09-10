@@ -32,8 +32,9 @@
             this.button_runAndroid = new System.Windows.Forms.Button();
             this.button_launchEmulator = new System.Windows.Forms.Button();
             this.button_launchServer = new System.Windows.Forms.Button();
-            this.button_openVSProject = new System.Windows.Forms.Button();
+            this.button_openVSCProject = new System.Windows.Forms.Button();
             this.button_cleanInstallModules = new System.Windows.Forms.Button();
+            this.button_openAndroidProject = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_runAndroid
@@ -69,16 +70,16 @@
             this.button_launchServer.UseVisualStyleBackColor = true;
             this.button_launchServer.Click += new System.EventHandler(this.button_launchServer_Click);
             // 
-            // button_openVSProject
+            // button_openVSCProject
             // 
-            this.button_openVSProject.Location = new System.Drawing.Point(143, 51);
-            this.button_openVSProject.Name = "button_openVSProject";
-            this.button_openVSProject.Size = new System.Drawing.Size(120, 23);
-            this.button_openVSProject.TabIndex = 3;
-            this.button_openVSProject.TabStop = false;
-            this.button_openVSProject.Text = "Open VS Project";
-            this.button_openVSProject.UseVisualStyleBackColor = true;
-            this.button_openVSProject.Click += new System.EventHandler(this.button_openVSProject_Click);
+            this.button_openVSCProject.Location = new System.Drawing.Point(143, 12);
+            this.button_openVSCProject.Name = "button_openVSCProject";
+            this.button_openVSCProject.Size = new System.Drawing.Size(120, 23);
+            this.button_openVSCProject.TabIndex = 3;
+            this.button_openVSCProject.TabStop = false;
+            this.button_openVSCProject.Text = "Open VSC Project";
+            this.button_openVSCProject.UseVisualStyleBackColor = true;
+            this.button_openVSCProject.Click += new System.EventHandler(this.button_openVSCProject_Click);
             // 
             // button_cleanInstallModules
             // 
@@ -91,13 +92,25 @@
             this.button_cleanInstallModules.UseVisualStyleBackColor = true;
             this.button_cleanInstallModules.Click += new System.EventHandler(this.button_cleanInstallModules_Click);
             // 
+            // button_openAndroidProject
+            // 
+            this.button_openAndroidProject.Location = new System.Drawing.Point(143, 51);
+            this.button_openAndroidProject.Name = "button_openAndroidProject";
+            this.button_openAndroidProject.Size = new System.Drawing.Size(120, 23);
+            this.button_openAndroidProject.TabIndex = 5;
+            this.button_openAndroidProject.TabStop = false;
+            this.button_openAndroidProject.Text = "Open Android Project";
+            this.button_openAndroidProject.UseVisualStyleBackColor = true;
+            this.button_openAndroidProject.Click += new System.EventHandler(this.button_openAndroidProject_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(275, 128);
+            this.Controls.Add(this.button_openAndroidProject);
             this.Controls.Add(this.button_cleanInstallModules);
-            this.Controls.Add(this.button_openVSProject);
+            this.Controls.Add(this.button_openVSCProject);
             this.Controls.Add(this.button_launchServer);
             this.Controls.Add(this.button_launchEmulator);
             this.Controls.Add(this.button_runAndroid);
@@ -117,8 +130,9 @@
         private System.Windows.Forms.Button button_runAndroid;
         private System.Windows.Forms.Button button_launchEmulator;
         private System.Windows.Forms.Button button_launchServer;
-        private System.Windows.Forms.Button button_openVSProject;
+        private System.Windows.Forms.Button button_openVSCProject;
         private System.Windows.Forms.Button button_cleanInstallModules;
+        private System.Windows.Forms.Button button_openAndroidProject;
     }
 }
 
