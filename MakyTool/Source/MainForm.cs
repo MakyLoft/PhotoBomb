@@ -15,7 +15,7 @@ namespace MakyTool
 {
     public partial class MainForm : Form
     {
-        enum PROCESSES { RUN_ANDROID, LAUNCH_EMULATOR, LAUNCH_SERVER, OPEN_VS_PROJECT }
+        enum PROCESSES { RUN_ANDROID, LAUNCH_EMULATOR, LAUNCH_SERVER, OPEN_VS_PROJECT, CLEAN_INSTALL_MODULES }
         private static PROCESSES nextProcess;
 
         private static String basePath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + "\\MakyTool\\Scripts\\";
@@ -74,6 +74,10 @@ namespace MakyTool
                 case PROCESSES.OPEN_VS_PROJECT:
                     processBat = "openVSProject.bat";
                     break;
+
+                case PROCESSES.CLEAN_INSTALL_MODULES:
+                    processBat = "cleanInstallModules.bat";
+                    break;
             }
 
             return processBat;
@@ -120,6 +124,12 @@ namespace MakyTool
         private void button_openVSProject_Click(object sender, EventArgs e)
         {
             SetNextProcess(PROCESSES.OPEN_VS_PROJECT);
+            RunProcessThread();
+        }
+
+        private void button_cleanInstallModules_Click(object sender, EventArgs e)
+        {
+            SetNextProcess(PROCESSES.CLEAN_INSTALL_MODULES);
             RunProcessThread();
         }
     }
