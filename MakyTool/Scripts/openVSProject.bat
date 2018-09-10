@@ -2,4 +2,4 @@
 
 cd %PHOTOBOMB_DIR%
 
-code .
+start "" "%UserProfile%\AppData\Local\Programs\Microsoft VS Code\Code.exe" "."
