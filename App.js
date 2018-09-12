@@ -10,6 +10,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, TouchableOpacity, Alert} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
+import AndroidBridge from './AndroidBridge.js';
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -45,6 +47,8 @@ export default class App extends Component<Props> {
       return this.renderVideo(image);
     }
 
+    AndroidBridge.showToast("Image Loaded Successfully", 10);
+    
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
   }
 
