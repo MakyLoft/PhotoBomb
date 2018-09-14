@@ -7,7 +7,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TouchableOpacity, Alert} from 'react-native';
+import { Platform, StyleSheet, /*Text, View, Image, TouchableOpacity, Alert*/Image } from 'react-native';
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import AndroidBridge from './AndroidBridge.js';
@@ -54,13 +55,36 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.state.image ? this.renderImage(this.state.image) : null}
+      <Container>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Header</Title>
+          </Body>
+          <Right />
+        </Header>
+        <View style={styles.container}>
+          {this.state.image ? this.renderImage(this.state.image) : <Text>Image not loaded</Text>}
+        </View>
+        <Footer>
+          <FooterTab>
+            <Button full onPress={() => this.pickSingle()}>
+              <Text>Press to select image</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+      </Container>
+      // <View style={styles.container}>
+      //   {this.state.image ? this.renderImage(this.state.image) : null}
 
-        <TouchableOpacity onPress={() => this.pickSingle()} style={styles.button}>
-          <Text style={styles.text}>Tab to select image</Text>
-        </TouchableOpacity>
-      </View>
+      //   <TouchableOpacity onPress={() => this.pickSingle()} style={styles.button}>
+      //     <Text style={styles.text}>Tab to select image</Text>
+      //   </TouchableOpacity>
+      // </View>
     );
   }
 }
