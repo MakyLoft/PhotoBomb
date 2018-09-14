@@ -1,36 +1,33 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 
 import React, {Component} from 'react';
-import { Platform, StyleSheet, /*Text, View, Image, TouchableOpacity, Alert*/Image } from 'react-native';
+import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import AndroidBridge from './AndroidBridge.js';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 type Props = {};
+
 export default class App extends Component<Props> {
 
   constructor() {
     super();
     this.state = {
-      image: null
+      image: null,
+      message: ""
     };
   }
 
-  pickSingle() {
+  componentWillMount() {
+    DeviceEventEmitter.addListener('showMessage', this.showMessage);
+  }
+
+  showMessage()
+  {
+    console.log("showMessage");
+  }
+
+  pickImage() {
     ImagePicker.openPicker({
     }).then(image => {
       console.log('Image:', image);
@@ -44,13 +41,18 @@ export default class App extends Component<Props> {
   }
 
   renderImage(image) {
-    if (image.mime && image.mime.toLowerCase().indexOf('video/') !== -1) {
-      return this.renderVideo(image);
-    }
-
     AndroidBridge.showToast("Image Loaded Successfully", 10);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
+  }
+
+  getMessage()
+  {
+    AndroidBridge.getMessage(
+      (newMessage) => {
+        this.setState({message : newMessage});
+      }
+    );
   }
 
   render() {
@@ -72,19 +74,15 @@ export default class App extends Component<Props> {
         </View>
         <Footer>
           <FooterTab>
-            <Button full onPress={() => this.pickSingle()}>
+            <Button full onPress={() => this.pickImage()}>
               <Text>Press to select image</Text>
+            </Button>
+            <Button full onPress={() => this.getMessage()}>
+            <Text>{this.state.message? this.state.message: 'Get a message from NativePlatform'}</Text>
             </Button>
           </FooterTab>
         </Footer>
       </Container>
-      // <View style={styles.container}>
-      //   {this.state.image ? this.renderImage(this.state.image) : null}
-
-      //   <TouchableOpacity onPress={() => this.pickSingle()} style={styles.button}>
-      //     <Text style={styles.text}>Tab to select image</Text>
-      //   </TouchableOpacity>
-      // </View>
     );
   }
 }
@@ -94,6 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
 });
