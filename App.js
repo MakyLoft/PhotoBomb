@@ -1,6 +1,6 @@
 
 import React, {Component} from 'react';
-import { Platform, StyleSheet, Image } from 'react-native';
+import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
@@ -13,8 +13,18 @@ export default class App extends Component<Props> {
   constructor() {
     super();
     this.state = {
-      image: null
+      image: null,
+      message: ""
     };
+  }
+
+  componentWillMount() {
+    DeviceEventEmitter.addListener('showMessage', this.showMessage);
+  }
+
+  showMessage()
+  {
+    console.log("showMessage");
   }
 
   pickImage() {
@@ -34,6 +44,15 @@ export default class App extends Component<Props> {
     AndroidBridge.showToast("Image Loaded Successfully", 10);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
+  }
+
+  getMessage()
+  {
+    AndroidBridge.getMessage(
+      (newMessage) => {
+        this.setState({message : newMessage});
+      }
+    );
   }
 
   render() {
@@ -57,6 +76,9 @@ export default class App extends Component<Props> {
           <FooterTab>
             <Button full onPress={() => this.pickImage()}>
               <Text>Press to select image</Text>
+            </Button>
+            <Button full onPress={() => this.getMessage()}>
+            <Text>{this.state.message? this.state.message: 'Get a message from NativePlatform'}</Text>
             </Button>
           </FooterTab>
         </Footer>
