@@ -1,14 +1,31 @@
 
 import React, {Component} from 'react';
 import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
+
+import { 
+  Container, 
+  Header, 
+  Title, 
+  Content, 
+  Footer, 
+  FooterTab, 
+  Button, 
+  Left, 
+  Right, 
+  Body, 
+  Icon, 
+  Text, 
+  View, 
+  Toast,
+  Root 
+} from 'native-base';
+
+import { StackNavigator } from "react-navigation";
 import ImagePicker from 'react-native-image-crop-picker';
 
 import AndroidBridge from './AndroidBridge.js';
 
-type Props = {};
-
-export default class App extends Component<Props> {
+class App extends Component {
 
   constructor() {
     super();
@@ -95,3 +112,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+
+const AppNavigator = StackNavigator(
+  {
+    App: { screen: App },
+  },
+  {
+    headerMode: "none"
+  }
+);
+
+export default () =>
+  <Root>
+    <AppNavigator />
+  </Root>;
