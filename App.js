@@ -23,7 +23,7 @@ import {
 import { StackNavigator } from "react-navigation";
 import ImagePicker from 'react-native-image-crop-picker';
 
-import AndroidBridge from './AndroidBridge.js';
+import NativeBridge from './NativeBridge.js';
 
 class App extends Component {
 
@@ -58,14 +58,14 @@ class App extends Component {
   }
 
   renderImage(image) {
-    AndroidBridge.showToast("Image Loaded Successfully", 10);
+    NativeBridge.showToast("Image Loaded Successfully", 10);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
   }
 
   getMessage()
   {
-    AndroidBridge.getMessage(
+    NativeBridge.getMessage(
       (newMessage) => {
         this.setState({message : newMessage});
       }

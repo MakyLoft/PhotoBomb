@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-import com.photobomb.AndroidBridgePackage;
+import com.photobomb.NativeBridgePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,7 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new PickerPackage(),
-            new AndroidBridgePackage()
+            new NativeBridgePackage()
       );
     }
 
