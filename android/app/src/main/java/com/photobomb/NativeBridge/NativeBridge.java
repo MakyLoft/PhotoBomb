@@ -12,16 +12,16 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import android.widget.Toast;
 import android.view.Gravity;
 
-public class NativeBridgeModule extends ReactContextBaseJavaModule {
+public class NativeBridge extends ReactContextBaseJavaModule {
     
     private static ReactApplicationContext m_reactContext;
 
     @Override
     public String getName() {
-        return "NativeBridgeModule";
+        return "NativeBridge";
     }
 
-    public NativeBridgeModule(ReactApplicationContext reactContext) {
+    public NativeBridge(ReactApplicationContext reactContext) {
         super(reactContext);
         m_reactContext = reactContext;
     }

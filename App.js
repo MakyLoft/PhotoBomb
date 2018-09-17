@@ -4,7 +4,17 @@ import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
-import NativeBridge from './NativeBridge.js';
+//NativeBridge
+import {NativeModules} from 'react-native';
+if(Platform.OS === 'ios')
+{
+  var NativeBridge = NativeModules.NativeBridge;
+}
+else if(Platform.OS === 'android')
+{
+  module.exports = NativeModules.NativeBridge;
+}
+//NativeBridge
 
 type Props = {};
 
@@ -41,7 +51,7 @@ export default class App extends Component<Props> {
   }
 
   renderImage(image) {
-    NativeBridge.showToast("Image Loaded Successfully", 10);
+    NativeBridge.showToast("Image Loaded Successfully", 1);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
   }
