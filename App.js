@@ -4,7 +4,7 @@ import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 
-import AndroidBridge from './AndroidBridge.js';
+import NativeBridge from './NativeBridge.js';
 
 type Props = {};
 
@@ -41,14 +41,14 @@ export default class App extends Component<Props> {
   }
 
   renderImage(image) {
-    AndroidBridge.showToast("Image Loaded Successfully", 10);
+    NativeBridge.showToast("Image Loaded Successfully", 10);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
   }
 
   getMessage()
   {
-    AndroidBridge.getMessage(
+    NativeBridge.getMessage(
       (newMessage) => {
         this.setState({message : newMessage});
       }
