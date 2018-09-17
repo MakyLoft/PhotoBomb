@@ -6,14 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 //NativeBridge
 import {NativeModules} from 'react-native';
-if(Platform.OS === 'ios')
-{
-  var NativeBridge = NativeModules.NativeBridge;
-}
-else if(Platform.OS === 'android')
-{
-  module.exports = NativeModules.NativeBridge;
-}
+var NativeBridge = NativeModules.NativeBridge;
 //NativeBridge
 
 type Props = {};
