@@ -23,7 +23,10 @@ import {
 import { StackNavigator } from "react-navigation";
 import ImagePicker from 'react-native-image-crop-picker';
 
-import NativeBridge from './NativeBridge.js';
+//NativeBridge
+import {NativeModules} from 'react-native';
+var NativeBridge = NativeModules.NativeBridge;
+//NativeBridge
 
 class App extends Component {
 
@@ -58,7 +61,7 @@ class App extends Component {
   }
 
   renderImage(image) {
-    NativeBridge.showToast("Image Loaded Successfully", 10);
+    NativeBridge.showToast("Image Loaded Successfully", 1);
     
     return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
   }
