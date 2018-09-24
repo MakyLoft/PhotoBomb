@@ -16,7 +16,8 @@ export default class App extends Component<Props> {
   constructor() {
     super();
     this.state = {
-      image: null,
+      image_background: null,
+      image_foreground: null,
       message: ""
     };
   }
@@ -30,13 +31,20 @@ export default class App extends Component<Props> {
     console.log("showMessage");
   }
 
-  pickImage() {
+  pickImage(imageType) {
     ImagePicker.openPicker({
     }).then(image => {
       console.log('Image:', image);
-      this.setState({
-        image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
-      });
+      if(imageType === 'background') {
+        this.setState({
+          image_background: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
+        });
+      }
+      else {
+        this.setState({
+          image_foreground: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
+        });
+      }
     }).catch(e => {
       console.log(e);
       Alert.alert(e.message ? e.message : e);
@@ -46,7 +54,7 @@ export default class App extends Component<Props> {
   renderImage(image) {
     NativeBridge.showToast("Image Loaded Successfully", 1);
     
-    return <Image style={{width: 400, height: 400, resizeMode: 'contain'}} source={image} />
+    return <Image style={{width: 200, height: 200, resizeMode: 'contain'}} source={image} />
   }
 
   getMessage()
@@ -73,12 +81,16 @@ export default class App extends Component<Props> {
           <Right />
         </Header>
         <View style={styles.container}>
-          {this.state.image ? this.renderImage(this.state.image) : <Text>Image not loaded</Text>}
+          {this.state.image_background ? this.renderImage(this.state.image_background) : <Text>Image not loaded</Text>}
+          {this.state.image_foreground ? this.renderImage(this.state.image_foreground) : <Text>Image not loaded</Text>}
         </View>
         <Footer>
           <FooterTab>
-            <Button full onPress={() => this.pickImage()}>
-              <Text>Press to select image</Text>
+            <Button full onPress={() => this.pickImage('background')}>
+              <Text>Press to select background image</Text>
+            </Button>
+            <Button full onPress={() => this.pickImage('foreground')}>
+              <Text>Press to select foreground image</Text>
             </Button>
             <Button full onPress={() => this.getMessage()}>
             <Text>{this.state.message? this.state.message: 'Get a message from NativePlatform'}</Text>
@@ -92,8 +104,9 @@ export default class App extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: 'white',
   },
