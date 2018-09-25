@@ -9,10 +9,23 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import android.graphics.Paint;
 import android.widget.Toast;
 import android.view.Gravity;
-import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+
+import android.os.Environment;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class NativeBridge extends ReactContextBaseJavaModule {
     
@@ -54,6 +67,26 @@ public class NativeBridge extends ReactContextBaseJavaModule {
 	@ReactMethod
     public void mergeImages(String imageBackgroundPath, String imageForegroundPath, Callback jsCallback)
     {
-        
+        File bgImagePath = new  File(imageBackgroundPath);
+        File fgImagePath = new  File(imageForegroundPath);
+
+        Bitmap bgImageBitmap = BitmapFactory.decodeFile(bgImagePath.getAbsolutePath());
+        Bitmap fgImageBitmap = BitmapFactory.decodeFile(fgImagePath.getAbsolutePath());
+
+        Bitmap mergeBitmap = Bitmap.createBitmap(bgImageBitmap.getWidth(), bgImageBitmap.getHeight(), bgImageBitmap.getConfig());
+        Canvas mergeCanvas = new Canvas(mergeBitmap);
+        mergeCanvas.drawBitmap(bgImageBitmap, new Matrix(), null);
+        mergeCanvas.drawBitmap(fgImageBitmap, new Matrix(), null);
+
+        String fileName = Environment.getExternalStorageDirectory() + "/MergeTest.png";
+
+        try(OutputStream stream = new FileOutputStream(fileName)) {
+            mergeBitmap.compress(CompressFormat.PNG, 80, stream);
+            stream.close();
+        } catch (IOException e) {
+
+        }
+
+        jsCallback.invoke(fileName);
     }
 }

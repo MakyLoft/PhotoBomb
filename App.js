@@ -76,7 +76,7 @@ export default class App extends Component<Props> {
   renderImage(image) {
     NativeBridge.showToast("Image Loaded Successfully", 1);
     
-    return <Image style={{width: 200, height: 200, resizeMode: 'contain'}} source={image} />
+    return <Image style={{width: 150, height: 150, resizeMode: 'contain'}} source={image} />
   }
 
   getMessage()
@@ -92,6 +92,15 @@ export default class App extends Component<Props> {
   {
     console.log('imageBackgroundPath: ', imageBackgroundPath);
     console.log('imageForegroundPath', imageForegroundPath);
+
+    NativeBridge.mergeImages(imageBackgroundPath, imageForegroundPath,
+      (newImagePath) => {
+        console.log('newImagePath: ', newImagePath);
+        this.setState({ 
+          image_merge : { uri: 'file://' + newImagePath }
+        });
+      }
+    );
   }
 
   render() {
