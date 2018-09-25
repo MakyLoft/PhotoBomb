@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import { Platform, StyleSheet, Image, DeviceEventEmitter } from 'react-native';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, View } from 'native-base';
-import ImagePicker from 'react-native-image-crop-picker';
+var ImagePicker = require('react-native-image-picker');
 
 //NativeBridge
 import {NativeModules} from 'react-native';
@@ -17,7 +17,10 @@ export default class App extends Component<Props> {
     super();
     this.state = {
       image_background: null,
+      image_background_path: null,
       image_foreground: null,
+      image_foreground_path: null,
+      image_merge: null,
       message: ""
     };
   }
@@ -32,22 +35,41 @@ export default class App extends Component<Props> {
   }
 
   pickImage(imageType) {
-    ImagePicker.openPicker({
-    }).then(image => {
-      console.log('Image:', image);
-      if(imageType === 'background') {
-        this.setState({
-          image_background: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
-        });
+
+    var pickOptions = {
+      title: 'Select Image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'Images'
       }
-      else {
-        this.setState({
-          image_foreground: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
-        });
+    };
+
+    ImagePicker.showImagePicker(pickOptions, (response) => {
+      console.log('Response = ', response);
+    
+      if (response.didCancel) {
+        console.log('User Cancelled Image Picker');
       }
-    }).catch(e => {
-      console.log(e);
-      Alert.alert(e.message ? e.message : e);
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User Tapped Custom Button: ', response.customButton);
+      }
+      else {        
+        if (imageType === 'background') {
+          this.setState({          
+            image_background : { uri: response.uri },
+            image_background_path : response.path
+          });
+        }
+        else {
+          this.setState({          
+            image_foreground : { uri: response.uri },
+            image_foreground_path : response.path
+          });
+        }
+      }
     });
   }
 
@@ -66,6 +88,12 @@ export default class App extends Component<Props> {
     );
   }
 
+  mergeImages(imageBackgroundPath, imageForegroundPath)
+  {
+    console.log('imageBackgroundPath: ', imageBackgroundPath);
+    console.log('imageForegroundPath', imageForegroundPath);
+  }
+
   render() {
     return (
       <Container>
@@ -82,19 +110,25 @@ export default class App extends Component<Props> {
         </Header>
         <View style={styles.container}>
           {this.state.image_background ? this.renderImage(this.state.image_background) : <Text>Image not loaded</Text>}
-          {this.state.image_foreground ? this.renderImage(this.state.image_foreground) : <Text>Image not loaded</Text>}
+
+          {this.state.image_merge ? this.renderImage(this.state.image_merge) : <Text>Merge</Text>}
+
+          {this.state.image_foreground ? this.renderImage(this.state.image_foreground) : <Text>Image not loaded</Text>}         
         </View>
         <Footer>
           <FooterTab>
             <Button full onPress={() => this.pickImage('background')}>
-              <Text>Press to select background image</Text>
+              <Text>Select Background Image</Text>
             </Button>
             <Button full onPress={() => this.pickImage('foreground')}>
-              <Text>Press to select foreground image</Text>
+              <Text>Select Foreground Image</Text>
+            </Button>
+            <Button full onPress={() => this.mergeImages(this.state.image_background_path, this.state.image_foreground_path)}>
+            <Text>Merge Images</Text>
             </Button>
             <Button full onPress={() => this.getMessage()}>
-            <Text>{this.state.message? this.state.message: 'Get a message from NativePlatform'}</Text>
-            </Button>
+            <Text>{this.state.message? this.state.message: 'Get NativePlatform Message'}</Text>
+            </Button>            
           </FooterTab>
         </Footer>
       </Container>

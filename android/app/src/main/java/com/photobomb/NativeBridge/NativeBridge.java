@@ -11,6 +11,8 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import android.widget.Toast;
 import android.view.Gravity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class NativeBridge extends ReactContextBaseJavaModule {
     
@@ -47,5 +49,11 @@ public class NativeBridge extends ReactContextBaseJavaModule {
     public void getMessage(Callback jsCallback)
     {
         jsCallback.invoke("You Rock!!!");
+    }
+	
+	@ReactMethod
+    public void mergeImages(String imageBackgroundPath, String imageForegroundPath, Callback jsCallback)
+    {
+        
     }
 }
